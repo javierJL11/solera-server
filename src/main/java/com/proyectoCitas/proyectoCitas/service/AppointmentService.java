@@ -17,5 +17,6 @@ public interface AppointmentService {
     boolean getActiveAppointmentByRoomName(String roomName);
     List<Appointment> getTodayAppointments();
     Appointment changeStatusAppointment(Long appointmentId, Integer newStatus);
+    Appointment makeSound ();
 
 }

@@ -1,10 +1,13 @@
 package com.proyectoCitas.proyectoCitas.service.impl;
 
+import com.proyectoCitas.proyectoCitas.entity.Alert;
 import com.proyectoCitas.proyectoCitas.entity.Appointment;
 import com.proyectoCitas.proyectoCitas.exception.ResourceNotFoundException;
+import com.proyectoCitas.proyectoCitas.repository.AlertRepository;
 import com.proyectoCitas.proyectoCitas.repository.AppointmentRepository;
 import com.proyectoCitas.proyectoCitas.service.AppointmentService;
 import lombok.AllArgsConstructor;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Autowired
     AppointmentRepository appointmentRepository;
+
+    @Autowired
+    AlertRepository alertRepository;
     @Override
     public List<Appointment> getAllAppointments() {
         return appointmentRepository.findAll();
@@ -92,6 +98,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         if(newStatus ==1) {
             isActiveAppo = getActiveAppointmentByRoomName(appointment.getRoom());
             if (!isActiveAppo) {
+                setSound(true, appointment.getId());
                 appointment.setStatus(newStatus);
                 appointment.setModifiedDate(new Timestamp(new Date().getTime()));
                 return appointmentRepository.save(appointment);
@@ -106,5 +113,24 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     }
 
+    @Override
+    public Appointment makeSound() {
+        Alert alert = alertRepository.findById(Long.parseLong("1")).orElseThrow(() ->
+                new ResourceNotFoundException(("La cita no exixte para el id :1 ")));
+        Appointment appointment = null;
+        if(alert.getMakeSound()){
+            appointment = getAppointmentById(alert.getAppointmentId());
+            setSound(false, appointment.getId());
+        }
+        return appointment;
+    }
+
+    public void setSound (boolean sound, Long appointmentId) {
+        Alert alert = alertRepository.findById(Long.parseLong("1")).orElseThrow(() ->
+                new ResourceNotFoundException(("La cita no exixte para el id : 1")));
+        alert.setAppointmentId(appointmentId);
+        alert.setMakeSound(sound);
+        alertRepository.save(alert);
+    }
 
 }

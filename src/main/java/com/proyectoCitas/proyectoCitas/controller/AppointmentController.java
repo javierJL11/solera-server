@@ -63,4 +63,10 @@ public class AppointmentController {
 
     }
 
+    @RequestMapping (path="/api/appointment/makesound", method = RequestMethod.GET)
+    public ResponseEntity<Appointment> getMakeSound(){
+        Appointment Appointment =  appointmentService.makeSound();
+        return ResponseEntity.ok(Appointment);
+    }
+
 }
