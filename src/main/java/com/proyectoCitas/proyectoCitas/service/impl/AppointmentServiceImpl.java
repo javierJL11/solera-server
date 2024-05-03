@@ -124,7 +124,7 @@ public class AppointmentServiceImpl implements AppointmentService {
         }
         return appointment;
     }
-
+    @Override
     public void setSound (boolean sound, Long appointmentId) {
         Alert alert = alertRepository.findById(Long.parseLong("1")).orElseThrow(() ->
                 new ResourceNotFoundException(("La cita no exixte para el id : 1")));

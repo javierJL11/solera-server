@@ -18,5 +18,6 @@ public interface AppointmentService {
     List<Appointment> getTodayAppointments();
     Appointment changeStatusAppointment(Long appointmentId, Integer newStatus);
     Appointment makeSound ();
+    void setSound(boolean sound, Long appointmentId);
 
 }

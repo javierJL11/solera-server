@@ -69,4 +69,10 @@ public class AppointmentController {
         return ResponseEntity.ok(Appointment);
     }
 
+    @RequestMapping (path="/api/appointment/activesound/{id}", method = RequestMethod.GET)
+    public ResponseEntity<String> getActiveSound(@PathVariable("id") Long appointmentId){
+        appointmentService.setSound(true,appointmentId);
+        return ResponseEntity.ok("sonido activado");
+    }
+
 }
