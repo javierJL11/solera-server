@@ -12,11 +12,11 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     @Query(
             nativeQuery = true,
-            value = "select * from appointment where status = 1 and DATE(created_date) = CURRENT_DATE and room = :roomName")
-    Appointment getActiveAppointmentByRoomName(@Param("roomName") String roomName);
+            value = "select * from appointment where status = 1 and DATE(created_date) = to_date(:date,'YYYY-MM-DD') and room_id = :roomId")
+    Appointment getActiveAppointmentByRoomId(@Param("roomId") Long id, @Param("date") String date);
 
     @Query(
             nativeQuery = true,
-            value = "select * from appointment where DATE(created_date) = CURRENT_DATE order by created_date")
-    List<Appointment> getTodayAppointments();
+            value = "select * from appointment where DATE(created_date) = to_date(:date,'YYYY-MM-DD') order by created_date")
+    List<Appointment> getTodayAppointments(@Param("date") String date);
 }

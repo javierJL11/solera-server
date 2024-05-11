@@ -32,7 +32,6 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public Appointment createAppointment(Appointment appointment) {
-        appointment.setCreatedDate(new Timestamp(new Date().getTime()));
        Appointment saveAppointment =appointmentRepository.save(appointment);
         return saveAppointment;
     }
@@ -56,7 +55,6 @@ public class AppointmentServiceImpl implements AppointmentService {
             appointment.setPatient(updatedAppointment.getPatient());
             appointment.setStatus(updatedAppointment.getStatus());
             appointment.setObservation(updatedAppointment.getObservation());
-            appointment.setModifiedDate(new Timestamp(new Date().getTime()));
             return appointmentRepository.save(appointment);
 
     }
@@ -67,9 +65,9 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public boolean getActiveAppointmentByRoomName(String roomName) {
+    public boolean getActiveAppointmentByRoomId(Long id, String date) {
         boolean isactive = true;
-        Appointment appointment = appointmentRepository.getActiveAppointmentByRoomName(roomName);
+        Appointment appointment = appointmentRepository.getActiveAppointmentByRoomId(id, date);
         if(appointment == null)
             isactive = false;
 
@@ -78,10 +76,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public List<Appointment> getTodayAppointments() {
+    public List<Appointment> getTodayAppointments(String date) {
         List<Appointment> appointments;
         try{
-            appointments =  appointmentRepository.getTodayAppointments();
+            appointments =  appointmentRepository.getTodayAppointments(date);
         }catch (Exception ResourceNotFoundException){
             throw new ResourceNotFoundException("Error al obtener las citas del dia ");
         }
@@ -89,25 +87,23 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public Appointment changeStatusAppointment(Long appointmentId, Integer newStatus) {
+    public Appointment changeStatusAppointment(Long appointmentId, Integer newStatus,String date) {
         boolean isActiveAppo = false;
 
         Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow(() ->
                 new ResourceNotFoundException(("La cita no exixte para el id : " + appointmentId)));
 
         if(newStatus ==1) {
-            isActiveAppo = getActiveAppointmentByRoomName(appointment.getRoom());
+            isActiveAppo = getActiveAppointmentByRoomId(appointment.getRoom().getId(), date);
             if (!isActiveAppo) {
                 setSound(true, appointment.getId());
                 appointment.setStatus(newStatus);
-                appointment.setModifiedDate(new Timestamp(new Date().getTime()));
                 return appointmentRepository.save(appointment);
             } else {
-                throw new ResourceNotFoundException("Actualmente existe una cita activa asociada a: " + appointment.getRoom());
+                throw new ResourceNotFoundException("Actualmente existe una cita activa asociada a: " + appointment.getRoom().getRoomName());
             }
         }else{
             appointment.setStatus(newStatus);
-            appointment.setModifiedDate(new Timestamp(new Date().getTime()));
             return appointmentRepository.save(appointment);
         }
 

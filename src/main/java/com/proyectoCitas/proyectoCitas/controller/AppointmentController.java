@@ -36,10 +36,9 @@ public class AppointmentController {
         return ResponseEntity.ok(appointments);
     }
 
-    @GetMapping("/todayAppointments")
-    @RequestMapping (path="/api/appointment/todayAppointments", method = RequestMethod.GET)
-    public ResponseEntity<List<Appointment>> getTodayAppointments(){
-        List<Appointment> appointments =  appointmentService.getTodayAppointments();
+    @RequestMapping (path="/api/appointment/todayAppointments/{date}", method = RequestMethod.GET)
+    public ResponseEntity<List<Appointment>> getTodayAppointments(@PathVariable("date") String date){
+        List<Appointment> appointments =  appointmentService.getTodayAppointments(date);
         return ResponseEntity.ok(appointments);
     }
 
@@ -50,9 +49,9 @@ public class AppointmentController {
         return ResponseEntity.ok(Appointment);
     }
 
-    @RequestMapping (path="/api/appointment/changestatus/{id}/{status}", method = RequestMethod.PUT)
-    public ResponseEntity<Appointment> changeStatusAppointment(@PathVariable("id") Long appointmentId, @PathVariable("status") Integer newStatus){
-        Appointment Appointment= appointmentService.changeStatusAppointment(appointmentId,newStatus);
+    @RequestMapping (path="/api/appointment/changestatus/{id}/{status}/{date}", method = RequestMethod.PUT)
+    public ResponseEntity<Appointment> changeStatusAppointment(@PathVariable("id") Long appointmentId, @PathVariable("status") Integer newStatus, @PathVariable("date") String date){
+        Appointment Appointment= appointmentService.changeStatusAppointment(appointmentId,newStatus,date);
         return ResponseEntity.ok(Appointment);
     }
 

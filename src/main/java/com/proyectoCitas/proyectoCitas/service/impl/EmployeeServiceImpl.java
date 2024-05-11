@@ -26,7 +26,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee createEmployee(Employee employee) {
         Employee saveEmployee = null;
         try {
-            employee.setCreatedDate(new Timestamp(new Date().getTime()));
             saveEmployee  = employeeRepository.save(employee);
         }catch (Exception ResourceNotFoundException){
             throw new ResourceNotFoundException("Error al agregar empleado ");
@@ -60,7 +59,6 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setEmail(updatedEmployee.getEmail());
             employee.setState(updatedEmployee.getState());
             employee.setEmployeeCategoryId(updatedEmployee.getEmployeeCategoryId());
-            employee.setModifiedDate(new Timestamp(new Date().getTime()));
             try {
                 newEmployee = employeeRepository.save(employee);
             }catch (Exception ResourceNotFoundException){

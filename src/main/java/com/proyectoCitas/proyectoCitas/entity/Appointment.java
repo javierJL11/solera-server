@@ -22,9 +22,9 @@ public class Appointment {
     @Column(name= "patient")
     private String patient;
 
-//    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "doctor_id")
-    private String doctor;
+    private Employee doctor;
 
     @Column(name= "observation")
     private String observation;
@@ -41,8 +41,8 @@ public class Appointment {
     @Column(name= "created_date")
     private Timestamp createdDate;
 
-//    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "room_id")
-    private String room;
+    private Room room;
 
 }

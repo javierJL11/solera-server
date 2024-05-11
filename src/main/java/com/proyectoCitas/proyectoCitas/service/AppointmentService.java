@@ -14,9 +14,9 @@ public interface AppointmentService {
     Appointment getAppointmentById(Long appointmentId);
     Appointment updateAppointment(Long appointmentId, Appointment updatedAppointment);
     void deleteAppointment (Long AppointmentId);
-    boolean getActiveAppointmentByRoomName(String roomName);
-    List<Appointment> getTodayAppointments();
-    Appointment changeStatusAppointment(Long appointmentId, Integer newStatus);
+    boolean getActiveAppointmentByRoomId(Long id, String date);
+    List<Appointment> getTodayAppointments(String date);
+    Appointment changeStatusAppointment(Long appointmentId, Integer newStatus, String date);
     Appointment makeSound ();
     void setSound(boolean sound, Long appointmentId);
 
