@@ -28,6 +28,18 @@ public class Client {
     @Column(name= "email")
     private String email;
 
+    @Column(name= "phone")
+    private Integer phone;
+
+    @Column(name= "state")
+    private Integer state;
+
+    @Column(name= "type")
+    private String type;
+
+    @Column(name= "observation")
+    private String observation;
+
     @Column(name= "modified_date")
     private Timestamp ModifiedDate;
 
