@@ -69,4 +69,15 @@ public class CommentServiceImpl implements CommentService {
             throw new ResourceNotFoundException("Error al eliminar el comentario");
         }
     }
+
+    @Override
+    public List<Comment> getCommentByParentId(Long parentId) {
+        List<Comment> listComments;
+        try {
+            listComments = commentRepository.getCommentByParentId(parentId);
+        } catch (Exception ResourceNotFoundException) {
+            throw new ResourceNotFoundException("Error al obtener lista de comentarios");
+        }
+        return listComments;
+    }
 }

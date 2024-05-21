@@ -47,4 +47,10 @@ public class CommentController {
 
     }
 
+    @RequestMapping (path="/api/comment/byparentid/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Comment>> getCommentByParentId(@PathVariable("id") Long parentId){
+        List<Comment> comments =  commentService.getCommentByParentId(parentId);
+        return ResponseEntity.ok(comments);
+    }
+
 }
