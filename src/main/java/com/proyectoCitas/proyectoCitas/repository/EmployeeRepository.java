@@ -11,4 +11,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
             nativeQuery = true,
             value = "select * from employee where state = 1 and employee_category_id = 1")
     List<Employee> getDoctors();
+
+    @Query(
+            nativeQuery = true,
+            value = "select * from employee where state = 1")
+    List<Employee> getActiveEmployee();
 }

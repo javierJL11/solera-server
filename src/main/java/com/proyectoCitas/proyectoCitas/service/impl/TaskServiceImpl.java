@@ -76,4 +76,15 @@ public class TaskServiceImpl implements TaskService {
             throw new ResourceNotFoundException("Error al eliminar la tarea");
         }
     }
+
+    @Override
+    public List<Task> getTasksByWeek(String firstDate, String lastDate) {
+        List<Task> listTasks;
+        try {
+            listTasks = taskRepository.getTasksByWeek(firstDate, lastDate);
+        } catch (Exception ResourceNotFoundException) {
+            throw new ResourceNotFoundException("Error al obtener lista de tareas");
+        }
+        return listTasks;
+    }
 }

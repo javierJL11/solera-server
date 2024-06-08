@@ -45,5 +45,11 @@ public class TaskController {
         return ResponseEntity.ok("Consultorio eliminado exitosamente!");
 
     }
+
+    @RequestMapping (path="/api/task/weeks/{firstdate}/{lastdate}", method = RequestMethod.GET)
+    public ResponseEntity<List<Task>> getAllTasks(@PathVariable("firstdate") String firstdate,@PathVariable("lastdate") String lastdate){
+        List<Task> tasks =  taskService.getTasksByWeek(firstdate, lastdate);
+        return ResponseEntity.ok(tasks);
+    }
     
 }

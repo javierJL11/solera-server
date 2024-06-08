@@ -35,6 +35,12 @@ public class ClientController {
         return ResponseEntity.ok(clients);
     }
 
+    @RequestMapping (path="/api/activeclient", method = RequestMethod.GET)
+    public ResponseEntity<List<Client>> getActiveClient(){
+        List<Client> clients =  clientService.getActiveClient();
+        return ResponseEntity.ok(clients);
+    }
+
     @RequestMapping (path="/api/client/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Client> updateClient(@PathVariable("id") Long clientId, @RequestBody Client updatedClient){
         Client client= clientService.updateClient(clientId,updatedClient);

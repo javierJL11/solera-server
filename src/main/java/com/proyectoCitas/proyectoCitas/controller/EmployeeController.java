@@ -35,6 +35,12 @@ public class EmployeeController {
         return ResponseEntity.ok(employees);
     }
 
+    @RequestMapping (path="/api/activeemployees", method = RequestMethod.GET)
+    public ResponseEntity<List<Employee>> getActiveEmployees(){
+        List<Employee> employees =  employeeService.getActiveEmployee();
+        return ResponseEntity.ok(employees);
+    }
+
     @RequestMapping (path="/api/employees/doctores", method = RequestMethod.GET)
     public ResponseEntity<List<Employee>> getDoctors(){
         List<Employee> doctors =  employeeService.getDoctors();

@@ -87,4 +87,16 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return doctors;
     }
+
+    @Override
+    public List<Employee> getActiveEmployee() {
+        List<Employee> employees;
+        try{
+            employees = employeeRepository.getActiveEmployee();
+
+        }catch (Exception ResourceNotFoundException){
+            throw new ResourceNotFoundException("Error al obtener lista de empleados");
+        }
+        return employees;
+    }
 }

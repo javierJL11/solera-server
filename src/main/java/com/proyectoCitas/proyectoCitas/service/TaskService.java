@@ -10,4 +10,5 @@ public interface TaskService {
     Task getTaskById (Long taskId);
     Task updateTask (Long taskId, Task updatedTask);
     void deleteTask (Long taskId);
+    List<Task> getTasksByWeek(String firstDate, String lastDate);
 }

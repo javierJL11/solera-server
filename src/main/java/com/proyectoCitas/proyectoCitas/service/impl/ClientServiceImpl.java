@@ -73,4 +73,15 @@ public class ClientServiceImpl implements ClientService {
             throw new ResourceNotFoundException("Error al eliminar paciente");
         }
     }
+
+    @Override
+    public List<Client> getActiveClient() {
+        List<Client> listClients;
+        try {
+            listClients = clientRepository.getActiveClient();
+        } catch (Exception ResourceNotFoundException) {
+            throw new ResourceNotFoundException("Error al obtener lista de pacientes");
+        }
+        return listClients;
+    }
 }
